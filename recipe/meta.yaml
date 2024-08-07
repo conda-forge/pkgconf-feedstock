@@ -1,5 +1,5 @@
 {% set name = "pkgconf" %}
-{% set version = "2.2.0" %}
+{% set version = "2.3.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/pkgconf/{{ name }}/archive/{{ name }}-{{ version }}.tar.gz
-  sha256: 2c72cbf37b2d42a9fbf7ed8f0e5432a0b0925481f67995a21ecf77962a6000bc
+  sha256: 0ee103cd390c3ee0e77a7a1c71dcb79a50a426fa2a648f6d07f2678c23adc5e3
 
 build:
   number: 0
