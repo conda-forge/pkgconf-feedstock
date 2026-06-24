@@ -1,5 +1,5 @@
 context:
-  version: "2.5.1"
+  version: "2.9.90"
 
 package:
   name: pkgconf
@@ -7,10 +7,10 @@ package:
 
 source:
   url: https://github.com/pkgconf/pkgconf/archive/pkgconf-${{ version }}.tar.gz
-  sha256: 79721badcad1987dead9c3609eb4877ab9b58821c06bdacb824f2c8897c11f2a
+  sha256: f5c10610be8ea7278fc31ad63b943525b5b2a2f6e5038d3c11947f5bd6fd214d
 
 build:
-  number: 1
+  number: 0
 
 requirements:
   build:
