@@ -11,3 +11,13 @@ fi
 meson ${MESON_ARGS} --wrap-mode=nofallback build
 meson compile -C build -v
 meson install -C build
+
+# conda customization for CDT packages and cross-compilation
+mv ${PREFIX}/bin/pkgconf ${PREFIX}/bin/pkgconf.bin
+cp "${RECIPE_DIR}"/pkgconf ${PREFIX}/bin/pkgconf
+chmod +x ${PREFIX}/bin/pkgconf
+
+if [[ "${compat}" == "yes" ]]; then
+  ln -s ${PREFIX}/bin/pkgconf ${PREFIX}/bin/pkg-config
+  ln -s ${PREFIX}/bin/pkgconf ${PREFIX}/bin/${HOST}-pkg-config
+fi

@@ -10,7 +10,12 @@ source:
   sha256: a9ae678879771fcf15247ac2435e7ad8308be8a5921898e6720b3b8949410f73
 
 build:
-  number: 0
+  number: 1
+  string: ${{ "pkg_config_" if compat == "yes" else "" }}h${{ hash }}_${{ build_number }}
+  variant:
+    use_keys:
+      - compat
+    down_prioritize_variant: ${{ 1 if compat == "no" else 0 }}
 
 requirements:
   build:
@@ -18,12 +23,35 @@ requirements:
     - ${{ stdlib('c') }}
     - meson
     - ninja
+  run_constraints:
+    - if: compat == "yes"
+      then:
+        # pkg-config symlinks clash with files from the pkg-config package
+        - pkg-config <0a0
   run_exports:
     - ${{ pin_subpackage('pkgconf') }}
 
 tests:
   - script:
       - pkgconf --help
+      - pkgconf --variable pc_path pkg-config
+      - if: unix
+        then:
+          - test -f $PREFIX/bin/pkgconf.bin
+          - if: compat == "yes"
+            then:
+              - test -L $PREFIX/bin/pkg-config
+              - pkg-config --variable pc_path pkg-config
+            else:
+              - test ! -e $PREFIX/bin/pkg-config
+        else:
+          - if: compat == "yes"
+            then:
+              - pkg-config --variable pc_path pkg-config
+            else:
+              - if exist %LIBRARY_PREFIX%\bin\pkg-config.exe exit 1
+          - if not exist %PREFIX%\etc\conda\activate.d\pkgconf_activate.bat exit 1
+          - if not exist %PREFIX%\etc\conda\deactivate.d\pkgconf_deactivate.bat exit 1
 
 about:
   license: MIT
