@@ -1,0 +1,5 @@
+# "yes": also install pkg-config symlinks (default, conflicts with the pkg-config package)
+# "no": only install pkgconf, can be co-installed with pkg-config
+compat:
+  - "yes"
+  - "no"
