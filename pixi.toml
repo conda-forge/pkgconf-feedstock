@@ -5,11 +5,11 @@
 
 [workspace]
 name = "pkgconf-feedstock"
-version = "2026.10.19"  # conda-smithy version used to generate this file
+version = "2026.10.24"  # conda-smithy version used to generate this file
 description = "Pixi configuration for conda-forge/pkgconf-feedstock"
 authors = ["@conda-forge/pkgconf"]
 channels = ["conda-forge"]
-platforms = ["linux-64", "linux-aarch64", "linux-ppc64le", "osx-64", "osx-arm64", "win-64"]
+platforms = ["linux-64", "linux-aarch64", "linux-ppc64le", "osx-64", "osx-arm64", "win-64", "win-arm64"]
 requires-pixi = ">=0.59.0"
 
 [tasks.build-locally]
@@ -145,6 +145,24 @@ description = "Debug pkgconf-feedstock with variant win_64_compatyes directly (w
 [feature.build.tasks."inspect-win_64_compatyes"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/win_64_compatyes.yaml"
 description = "List contents of pkgconf-feedstock packages built for variant win_64_compatyes"
+[feature.build.tasks."build-win_arm64_compatno"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/win_arm64_compatno.yaml --target-platform win-arm64"
+description = "Build pkgconf-feedstock with variant win_arm64_compatno directly (without setup scripts)"
+[feature.build.tasks."debug-win_arm64_compatno"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/win_arm64_compatno.yaml --target-platform win-arm64"
+description = "Debug pkgconf-feedstock with variant win_arm64_compatno directly (without setup scripts)"
+[feature.build.tasks."inspect-win_arm64_compatno"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/win_arm64_compatno.yaml"
+description = "List contents of pkgconf-feedstock packages built for variant win_arm64_compatno"
+[feature.build.tasks."build-win_arm64_compatyes"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/win_arm64_compatyes.yaml --target-platform win-arm64"
+description = "Build pkgconf-feedstock with variant win_arm64_compatyes directly (without setup scripts)"
+[feature.build.tasks."debug-win_arm64_compatyes"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/win_arm64_compatyes.yaml --target-platform win-arm64"
+description = "Debug pkgconf-feedstock with variant win_arm64_compatyes directly (without setup scripts)"
+[feature.build.tasks."inspect-win_arm64_compatyes"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/win_arm64_compatyes.yaml"
+description = "List contents of pkgconf-feedstock packages built for variant win_arm64_compatyes"
 
 [environments]
 build = ["build"]
