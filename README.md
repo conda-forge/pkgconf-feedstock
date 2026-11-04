@@ -250,4 +250,5 @@ Feedstock Maintainers
 =====================
 
 * [@danielnachun](https://github.com/danielnachun/)
+* [@isuruf](https://github.com/isuruf/)
 
