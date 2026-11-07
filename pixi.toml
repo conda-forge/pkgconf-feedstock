@@ -91,6 +91,24 @@ description = "Debug pkgconf-feedstock with variant linux_ppc64le_compatyes dire
 [feature.build.tasks."inspect-linux_ppc64le_compatyes"]
 cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_ppc64le_compatyes.yaml"
 description = "List contents of pkgconf-feedstock packages built for variant linux_ppc64le_compatyes"
+[feature.build.tasks."build-linux_riscv64_compatno"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/linux_riscv64_compatno.yaml --target-platform linux-riscv64"
+description = "Build pkgconf-feedstock with variant linux_riscv64_compatno directly (without setup scripts)"
+[feature.build.tasks."debug-linux_riscv64_compatno"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_riscv64_compatno.yaml --target-platform linux-riscv64"
+description = "Debug pkgconf-feedstock with variant linux_riscv64_compatno directly (without setup scripts)"
+[feature.build.tasks."inspect-linux_riscv64_compatno"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_riscv64_compatno.yaml"
+description = "List contents of pkgconf-feedstock packages built for variant linux_riscv64_compatno"
+[feature.build.tasks."build-linux_riscv64_compatyes"]
+cmd = "rattler-build build --recipe recipe -m .ci_support/linux_riscv64_compatyes.yaml --target-platform linux-riscv64"
+description = "Build pkgconf-feedstock with variant linux_riscv64_compatyes directly (without setup scripts)"
+[feature.build.tasks."debug-linux_riscv64_compatyes"]
+cmd = "rattler-build debug setup --recipe recipe -m .ci_support/linux_riscv64_compatyes.yaml --target-platform linux-riscv64"
+description = "Debug pkgconf-feedstock with variant linux_riscv64_compatyes directly (without setup scripts)"
+[feature.build.tasks."inspect-linux_riscv64_compatyes"]
+cmd = "inspect_artifacts --recipe-dir recipe -m .ci_support/linux_riscv64_compatyes.yaml"
+description = "List contents of pkgconf-feedstock packages built for variant linux_riscv64_compatyes"
 [feature.build.tasks."build-osx_64_compatno"]
 cmd = "rattler-build build --recipe recipe -m .ci_support/osx_64_compatno.yaml --target-platform osx-64"
 description = "Build pkgconf-feedstock with variant osx_64_compatno directly (without setup scripts)"
