@@ -1,8 +1,9 @@
 context:
   version: "3.0.11"
+  build_number: 1
 
-package:
-  name: pkgconf
+recipe:
+  name: pkgconf-split
   version: ${{ version }}
 
 source:
@@ -10,48 +11,139 @@ source:
   sha256: d2c8a0965d5b80dcc454cc999ad5edb8bfbc4d8e65cde7a6f19a5cb7ecaf3377
 
 build:
-  number: 0
-  string: ${{ "pkg_config_" if compat == "yes" else "" }}h${{ hash }}_${{ build_number }}
-  variant:
-    use_keys:
-      - compat
-    down_prioritize_variant: ${{ 1 if compat == "no" else 0 }}
+  number: ${{ build_number }}
 
-requirements:
-  build:
-    - ${{ compiler('c') }}
-    - ${{ stdlib('c') }}
-    - meson
-    - ninja
-  run_constraints:
-    - if: compat == "yes"
-      then:
-        # pkg-config symlinks clash with files from the pkg-config package
-        - pkg-config <0a0
-  run_exports:
-    - ${{ pin_subpackage('pkgconf') }}
+outputs:
+  - staging:
+      name: pkgconf-build
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+        - meson
+        - ninja
+    build:
+      script:
+        file: build
 
-tests:
-  - script:
-      - pkgconf --help
-      - pkgconf --variable pc_path pkg-config
-      - if: unix
-        then:
-          - test -f $PREFIX/bin/pkgconf.bin
-          - if: compat == "yes"
+  - package:
+      name: libpkgconf
+    inherit: pkgconf-build
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+      run_constraints:
+        # older pkgconf packages ship the libpkgconf files themselves
+        - pkgconf ==${{ version }} *_${{ build_number }}
+    build:
+      files:
+        - if: linux
+          then:
+            - lib/libpkgconf.so.*
+        - if: osx
+          then:
+            - lib/libpkgconf.*.dylib
+        - if: win
+          then:
+            - Library/bin/pkgconf-*.dll
+    tests:
+      - package_contents:
+          lib:
+            - pkgconf
+
+  - package:
+      name: libpkgconf-devel
+    inherit: pkgconf-build
+    build:
+      files:
+        - include/pkgconf/**
+        - lib/pkgconfig/libpkgconf.pc
+        - Library/include/pkgconf/**
+        - Library/lib/pkgconfig/libpkgconf.pc
+        - if: linux
+          then:
+            - lib/libpkgconf.so
+        - if: osx
+          then:
+            - lib/libpkgconf.dylib
+        - if: win
+          then:
+            - Library/lib/pkgconf.lib
+    requirements:
+      run:
+        - ${{ pin_subpackage('libpkgconf', exact=True) }}
+      run_constraints:
+        # older pkgconf packages ship the libpkgconf files themselves
+        - pkgconf ==${{ version }} *_${{ build_number }}
+      run_exports:
+        - ${{ pin_subpackage('libpkgconf', upper_bound='x.x') }}
+    tests:
+      - package_contents:
+          include:
+            - pkgconf/libpkgconf/libpkgconf.h
+          files:
+            - if: unix
+              then:
+                - lib/pkgconfig/libpkgconf.pc
+              else:
+                - Library/lib/pkgconfig/libpkgconf.pc
+
+  - package:
+      name: pkgconf
+    inherit: pkgconf-build
+    build:
+      string: ${{ "pkg_config_" if compat == "yes" else "" }}h${{ hash }}_${{ build_number }}
+      variant:
+        use_keys:
+          - compat
+        down_prioritize_variant: ${{ 1 if compat == "no" else 0 }}
+      script:
+        file: install_pkgconf
+      files:
+        include:
+          - bin/**
+          - share/**
+          - etc/conda/**
+          - Library/bin/*.exe
+          - Library/share/**
+        exclude:
+          - Library/bin/pkgconf-*.dll
+    requirements:
+      build:
+        # for ${HOST} in install_pkgconf.sh
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+      host:
+        - ${{ pin_subpackage('libpkgconf', exact=True) }}
+      run:
+        - ${{ pin_subpackage('libpkgconf', exact=True) }}
+      run_constraints:
+        - if: compat == "yes"
+          then:
+            # pkg-config symlinks clash with files from the pkg-config package
+            - pkg-config <0a0
+    tests:
+      - script:
+          - pkgconf --help
+          - pkgconf --variable pc_path pkg-config
+          - if: unix
             then:
-              - test -L $PREFIX/bin/pkg-config
-              - pkg-config --variable pc_path pkg-config
+              - test -f $PREFIX/bin/pkgconf.bin
+              - if: compat == "yes"
+                then:
+                  - test -L $PREFIX/bin/pkg-config
+                  - pkg-config --variable pc_path pkg-config
+                else:
+                  - test ! -e $PREFIX/bin/pkg-config
             else:
-              - test ! -e $PREFIX/bin/pkg-config
-        else:
-          - if: compat == "yes"
-            then:
-              - pkg-config --variable pc_path pkg-config
-            else:
-              - if exist %LIBRARY_PREFIX%\bin\pkg-config.exe exit 1
-          - if not exist %PREFIX%\etc\conda\activate.d\pkgconf_activate.bat exit 1
-          - if not exist %PREFIX%\etc\conda\deactivate.d\pkgconf_deactivate.bat exit 1
+              - if: compat == "yes"
+                then:
+                  - pkg-config --variable pc_path pkg-config
+                else:
+                  - if exist %LIBRARY_PREFIX%\bin\pkg-config.exe exit 1
+              - if not exist %PREFIX%\etc\conda\activate.d\pkgconf_activate.bat exit 1
+              - if not exist %PREFIX%\etc\conda\deactivate.d\pkgconf_deactivate.bat exit 1
 
 about:
   license: MIT
@@ -61,6 +153,7 @@ about:
   repository: https://github.com/pkgconf/pkgconf
 
 extra:
+  feedstock-name: pkgconf
   recipe-maintainers:
     - danielnachun
     - isuruf
