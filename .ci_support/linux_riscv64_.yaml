@@ -1,5 +1,5 @@
 DOCKER_PLATFORM:
-- linux/aarch64
+- linux/amd64
 c_compiler:
 - gcc
 c_compiler_version:
@@ -7,14 +7,15 @@ c_compiler_version:
 c_stdlib:
 - sysroot
 c_stdlib_version:
-- '2.17'
+- '2.39'
 channel_sources:
 - conda-forge
 channel_targets:
 - conda-forge main
 compat:
+- 'no'
 - 'yes'
 docker_image:
-- quay.io/condaforge/linux-anvil-aarch64:alma10
+- quay.io/condaforge/linux-anvil-x86_64:alma10
 target_platform:
-- linux-aarch64
+- linux-riscv64
