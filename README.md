@@ -36,45 +36,24 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux_ppc64le_compatno</td>
+              <td>linux_ppc64le</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=22957&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/pkgconf-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_compatno" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/pkgconf-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_ppc64le_compatyes</td>
+              <td>osx_64</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=22957&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/pkgconf-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_compatyes" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/pkgconf-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>osx_64_compatno</td>
+              <td>osx_arm64</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=22957&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/pkgconf-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_compatno" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64_compatyes</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=22957&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/pkgconf-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_compatyes" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64_compatno</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=22957&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/pkgconf-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_compatno" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64_compatyes</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=22957&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/pkgconf-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_compatyes" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/pkgconf-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_" alt="variant">
                 </a>
               </td>
             </tr>
@@ -90,6 +69,8 @@ Current release info
 
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-libpkgconf-green.svg)](https://anaconda.org/conda-forge/libpkgconf) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libpkgconf.svg)](https://anaconda.org/conda-forge/libpkgconf) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libpkgconf.svg)](https://anaconda.org/conda-forge/libpkgconf) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libpkgconf.svg)](https://anaconda.org/conda-forge/libpkgconf) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-libpkgconf--devel-green.svg)](https://anaconda.org/conda-forge/libpkgconf-devel) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/libpkgconf-devel.svg)](https://anaconda.org/conda-forge/libpkgconf-devel) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/libpkgconf-devel.svg)](https://anaconda.org/conda-forge/libpkgconf-devel) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/libpkgconf-devel.svg)](https://anaconda.org/conda-forge/libpkgconf-devel) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-pkgconf-green.svg)](https://anaconda.org/conda-forge/pkgconf) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/pkgconf.svg)](https://anaconda.org/conda-forge/pkgconf) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/pkgconf.svg)](https://anaconda.org/conda-forge/pkgconf) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/pkgconf.svg)](https://anaconda.org/conda-forge/pkgconf) |
 
 Installing pkgconf
@@ -109,7 +90,7 @@ How to use
 <summary>With conda</summary>
 
 ```
-conda install pkgconf
+conda install libpkgconf libpkgconf-devel pkgconf
 ```
 
 </details>
@@ -118,7 +99,7 @@ conda install pkgconf
 <summary>With mamba</summary>
 
 ```
-mamba install pkgconf
+mamba install libpkgconf libpkgconf-devel pkgconf
 ```
 
 </details>
@@ -128,9 +109,9 @@ mamba install pkgconf
 
 ```
 # for adding to your local project
-pixi add pkgconf
+pixi add libpkgconf libpkgconf-devel pkgconf
 # for installing globally
-pixi global install pkgconf
+pixi global install libpkgconf libpkgconf-devel pkgconf
 ```
 
 </details>
@@ -138,13 +119,13 @@ pixi global install pkgconf
 Search package versions
 -----------------------
 
-It is possible to list all of the versions of `pkgconf` available on your platform:
+It is possible to list all of the versions of `libpkgconf` available on your platform:
 
 <details>
 <summary>With conda</summary>
 
 ```
-conda search pkgconf --channel conda-forge
+conda search libpkgconf --channel conda-forge
 ```
 
 </details>
@@ -153,7 +134,7 @@ conda search pkgconf --channel conda-forge
 <summary>With mamba</summary>
 
 ```
-mamba search pkgconf --channel conda-forge
+mamba search libpkgconf --channel conda-forge
 ```
 
 </details>
@@ -162,7 +143,7 @@ mamba search pkgconf --channel conda-forge
 <summary>With pixi</summary>
 
 ```
-pixi search pkgconf --channel conda-forge
+pixi search libpkgconf --channel conda-forge
 ```
 
 </details>
@@ -172,13 +153,13 @@ pixi search pkgconf --channel conda-forge
 
 ```
 # Search all versions available on your platform:
-mamba repoquery search pkgconf --channel conda-forge
+mamba repoquery search libpkgconf --channel conda-forge
 
-# List packages depending on `pkgconf`:
-mamba repoquery whoneeds pkgconf --channel conda-forge
+# List packages depending on `libpkgconf`:
+mamba repoquery whoneeds libpkgconf --channel conda-forge
 
-# List dependencies of `pkgconf`:
-mamba repoquery depends pkgconf --channel conda-forge
+# List dependencies of `libpkgconf`:
+mamba repoquery depends libpkgconf --channel conda-forge
 ```
 
 </details>
