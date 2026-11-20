@@ -98,8 +98,6 @@ outputs:
         use_keys:
           - compat
         down_prioritize_variant: ${{ 1 if compat == "no" else 0 }}
-      script:
-        file: install_pkgconf
       files:
         include:
           - bin/**
@@ -109,11 +107,13 @@ outputs:
           - Library/share/**
         exclude:
           - Library/bin/pkgconf-*.dll
+          # compat links are installed by the staging build
+          - if: compat != "yes"
+            then:
+              - bin/pkg-config
+              - bin/*-pkg-config
+              - Library/bin/pkg-config.exe
     requirements:
-      build:
-        # for ${HOST} in install_pkgconf.sh
-        - ${{ compiler('c') }}
-        - ${{ stdlib('c') }}
       host:
         - ${{ pin_subpackage('libpkgconf', exact=True) }}
       run:

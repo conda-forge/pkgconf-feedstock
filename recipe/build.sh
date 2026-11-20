@@ -17,3 +17,7 @@ mv ${PREFIX}/bin/pkgconf ${PREFIX}/bin/pkgconf.bin
 cp "${RECIPE_DIR}"/pkgconf ${PREFIX}/bin/pkgconf
 chmod +x ${PREFIX}/bin/pkgconf
 
+
+# pkg-config compat links; only shipped by the compat variant of pkgconf
+ln -s ${PREFIX}/bin/pkgconf ${PREFIX}/bin/pkg-config
+ln -s ${PREFIX}/bin/pkgconf ${PREFIX}/bin/${HOST}-pkg-config
