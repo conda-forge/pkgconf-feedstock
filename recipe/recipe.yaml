@@ -49,8 +49,18 @@ outputs:
             - Library/bin/pkgconf-*.dll
     tests:
       - package_contents:
-          lib:
-            - pkgconf
+          # lib: would also require the import library on Windows,
+          # which lives in libpkgconf-devel; the dll is pkgconf-<soversion>.dll
+          files:
+            - if: linux
+              then:
+                - lib/libpkgconf.so.*
+            - if: osx
+              then:
+                - lib/libpkgconf.*.dylib
+            - if: win
+              then:
+                - Library/bin/pkgconf-*.dll
 
   - package:
       name: libpkgconf-devel
