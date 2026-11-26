@@ -1,6 +1,6 @@
 context:
   version: "3.0.11"
-  build_number: 1
+  build_number: 2
 
 recipe:
   name: pkgconf-split
@@ -134,12 +134,17 @@ outputs:
             # pkg-config symlinks clash with files from the pkg-config package
             - pkg-config <0a0
     tests:
-      - script:
+      - requirements:
+          run:
+            - ${{ pin_subpackage('libpkgconf-devel', exact=True) }}
+        script:
           - pkgconf --help
           - pkgconf --variable pc_path pkg-config
           - if: unix
             then:
               - test -f $PREFIX/bin/pkgconf.bin
+              # $PREFIX/lib must not be filtered out as a system libdir
+              - pkgconf --libs libpkgconf | grep -- "-L$PREFIX/lib"
               - if: compat == "yes"
                 then:
                   - test -L $PREFIX/bin/pkg-config

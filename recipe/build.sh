@@ -8,7 +8,14 @@ else
     export CFLAGS="${CFLAGS} -D_DARWIN_C_SOURCE"
 fi
 
-meson ${MESON_ARGS} --wrap-mode=nofallback build
+# By default the system libdir/includedir are ${PREFIX}/lib and ${PREFIX}/include,
+# which makes pkgconf filter -L${PREFIX}/lib and -I${PREFIX}/include out of
+# --libs and --cflags. Only filter the real system directories.
+meson ${MESON_ARGS} \
+    --wrap-mode=nofallback \
+    -Dwith-system-libdir=/usr/lib \
+    -Dwith-system-includedir=/usr/include \
+    build
 meson compile -C build -v
 meson install -C build
 
