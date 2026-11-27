@@ -143,8 +143,10 @@ outputs:
           - if: unix
             then:
               - test -f $PREFIX/bin/pkgconf.bin
-              # $PREFIX/lib must not be filtered out as a system libdir
+              # no directories are filtered as system dirs
               - pkgconf --libs libpkgconf | grep -- "-L$PREFIX/lib"
+              - 'mkdir -p pc && printf "Name: sys\nDescription: sys\nVersion: 1\nLibs: -L/usr/lib -lsys\nCflags: -I/usr/include\n" > pc/sys.pc'
+              - PKG_CONFIG_PATH=$PWD/pc pkgconf --libs --cflags sys | grep -- "-I/usr/include -L/usr/lib -lsys"
               - if: compat == "yes"
                 then:
                   - test -L $PREFIX/bin/pkg-config
