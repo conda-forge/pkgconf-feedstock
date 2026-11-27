@@ -8,7 +8,17 @@ else
     export CFLAGS="${CFLAGS} -D_DARWIN_C_SOURCE"
 fi
 
-meson ${MESON_ARGS} --wrap-mode=nofallback build
+# By default the system libdir/includedir are ${PREFIX}/lib and ${PREFIX}/include,
+# which makes pkgconf filter -L${PREFIX}/lib and -I${PREFIX}/include out of
+# --libs and --cflags. /usr/lib and /usr/include must not be filtered either,
+# because conda's compilers use their own sysroot and do not search them.
+# An empty value means the default to meson, so pass ":", which pkgconf splits
+# into an empty list and therefore filters nothing.
+meson ${MESON_ARGS} \
+    --wrap-mode=nofallback \
+    -Dwith-system-libdir=: \
+    -Dwith-system-includedir=: \
+    build
 meson compile -C build -v
 meson install -C build
 
